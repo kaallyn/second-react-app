@@ -226,7 +226,7 @@ class CatBox extends React.Component {
 			<div className="cat-box">
 				<h3>Cats Comments</h3>
 				<h4 className="cat-count">{this._getCatsTitle(cats.length)}</h4>
-				<button onClick = {this.handleClick.bind(this)}>Show Cats</button>
+				<button onClick = {this._handleClick.bind(this)}>Show Cats</button>
 				{/*button above that will toggle state on click event*/}
 				{catNodes}
 			</div>
@@ -235,7 +235,7 @@ class CatBox extends React.Component {
 	// handleClick changes the state to true or false when button is pressed.
 	_handleClick() {
 		this.setState({
-			showCats: !this.state.showComments
+			showCats: !this.state.showCats
 		});
 	}
 
