@@ -131,12 +131,14 @@ ReactDOM.render(
 // then create CatBox react component
 class CatBox extends React.Component {
 	render() {
+		const cats = this._getCats();
 		return(
 			<div className="cat-box">
 				<h3>Cats Comments</h3>
-				<h4 className="cat-count"></h4>
+				<h4 className="cat-count">{this._getCatsTitle(cats.length)}</h4>
 				<div className="cat-list">
-					
+					{cats}
+					{/* {cats} above is the prop hat populates the catList array into the the cat-box html div*/ }
 				</div>
 			</div>
 		);
@@ -162,6 +164,18 @@ class CatBox extends React.Component {
 			
 		});
 			
+	}
+
+	// below is new method to adjust grammar (singuler vs plural) of the h4 based on how many cats there are
+	
+	_getCatsTitle(catCount) {
+		if (catCount === 0){
+			return `No cats yet`;
+		} else if (catCount === 1){
+			return `1 cat`;
+		} else {
+			return `${catCount}  cats`
+		}
 	}
 }
 
