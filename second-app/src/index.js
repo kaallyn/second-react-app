@@ -111,6 +111,82 @@ ReactDOM.render(
 // Will normally use this menthod instead of hard coding in the content like on line 96-97
 
 // first need to create Cat react component
+// class Cat extends React.Component{
+// 	render() {
+// 		return(
+// 			<div className="cat"> 
+// 				<p className="cat-header"> {this.props.author} </p>
+// 				<p className="cat-body"> {this.props.body} </p>
+// 				<div className="cat-footer">
+// 					<a href="#" className="cat-footer-delete"> Delete This Cat </a>
+// 				</div>
+// 			</div>
+// 		);
+// 	}
+// }
+// ReactDOM.render(
+// 	<Cat />, document.getElementById('cat')
+// );
+
+// // then create CatBox react component
+// class CatBox extends React.Component {
+// 	render() {
+// 		const cats = this._getCats();
+// 		return(
+// 			<div className="cat-box">
+// 				<h3>Cats Comments</h3>
+// 				<h4 className="cat-count">{this._getCatsTitle(cats.length)}</h4>
+// 				<div className="cat-list">
+// 					{cats}
+// 					{/* {cats} above is the prop hat populates the catList array into the the cat-box html div*/ }
+// 				</div>
+// 			</div>
+// 		);
+// 	}
+
+// // underscore distinguishes custom user-made methods from native React methods
+// 	_getCats() {
+// 	// above is new method that will return array of jsx elements
+// 		const catList = [
+// 			{ id: 1, author: 'Jeff Lebowski', body: 'It really tied the room together.' },
+// 			{ id: 2, author: 'Walter', body: 'Take the ringer!' }
+// 		];
+
+// 		return catList.map((cat) => {
+// 		// line above returns an array of catList
+// 		// above, each element of catList is passed through as an argument called cat
+// 			return (
+// 				<Cat 
+// 				// with a new component (Comment) built for each element in commentList
+// 					author={cat.author}	body={cat.body}	key={cat.id}	/>
+// 					// Here we use the argument (called comment) to access the properties of each element in commentList, therby passing them through as props. IMPORTANT: you always need a KEY element to keep track of the id of each element in your array commentList
+// 			);
+			
+// 		});
+			
+// 	}
+
+// 	// below is new method to adjust grammar (singuler vs plural) of the h4 based on how many cats there are
+	
+// 	_getCatsTitle(catCount) {
+// 		if (catCount === 0){
+// 			return `No cats yet`;
+// 		} else if (catCount === 1){
+// 			return `1 cat`;
+// 		} else {
+// 			return `${catCount}  cats`
+// 		}
+// 	}
+// }
+
+// ReactDOM.render(
+// 	<CatBox/>, document.getElementById('cat-box')
+// );
+// 
+// 
+// 
+// HANDLING DATA CHANGES WITH STATE
+// Going to toggle show/hide content based on component state, starting with same code as above.
 class Cat extends React.Component{
 	render() {
 		return(
@@ -128,56 +204,64 @@ ReactDOM.render(
 	<Cat />, document.getElementById('cat')
 );
 
-// then create CatBox react component
 class CatBox extends React.Component {
+	// Below we must set the state by default to false using constructor
+	constructor(){
+		super();
+
+		this.state = {
+			showCats: false
+		};
+	}
 	render() {
 		const cats = this._getCats();
+		let catNodes;
+		// need the node above
+		if (this.state.showCats) {
+		// life above creates list of cats if state is true, code to display comments goes inside brackets here
+			catNodes = <div className="cat-list"> {cats} </div>
+			// move above div from inside "cat-box" div below
+		}
 		return(
 			<div className="cat-box">
 				<h3>Cats Comments</h3>
 				<h4 className="cat-count">{this._getCatsTitle(cats.length)}</h4>
-				<div className="cat-list">
-					{cats}
-					{/* {cats} above is the prop hat populates the catList array into the the cat-box html div*/ }
-				</div>
+				<button onClick = {this.handleClick.bind(this)}>Show Cats</button>
+				{/*button above that will toggle state on click event*/}
+				{catNodes}
 			</div>
 		);
 	}
+	// handleClick changes the state to true or false when button is pressed.
+	_handleClick() {
+		this.setState({
+			showCats: !this.state.showComments
+		});
+	}
 
-// underscore distinguishes custom user-made methods from native React methods
 	_getCats() {
-	// above is new method that will return array of jsx elements
 		const catList = [
 			{ id: 1, author: 'Jeff Lebowski', body: 'It really tied the room together.' },
 			{ id: 2, author: 'Walter', body: 'Take the ringer!' }
 		];
-
 		return catList.map((cat) => {
-		// line above returns an array of catList
-		// above, each element of catList is passed through as an argument called cat
 			return (
 				<Cat 
-				// with a new component (Comment) built for each element in commentList
 					author={cat.author}	body={cat.body}	key={cat.id}	/>
-					// Here we use the argument (called comment) to access the properties of each element in commentList, therby passing them through as props. IMPORTANT: you always need a KEY element to keep track of the id of each element in your array commentList
-			);
-			
-		});
-			
+			);			
+		});			
 	}
-
-	// below is new method to adjust grammar (singuler vs plural) of the h4 based on how many cats there are
 	
 	_getCatsTitle(catCount) {
 		if (catCount === 0){
-			return `No cats yet`;
-		} else if (catCount === 1){
-			return `1 cat`;
-		} else {
-			return `${catCount}  cats`
+				return `No cats yet`;
+			} else if (catCount === 1){
+				return `1 cat`;
+			} else {
+				return `${catCount}  cats`
+			}
 		}
 	}
-}
 
 ReactDOM.render(
 	<CatBox/>, document.getElementById('cat-box')
