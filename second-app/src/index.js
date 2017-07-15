@@ -217,8 +217,12 @@ class CatBox extends React.Component {
 		const cats = this._getCats();
 		let catNodes;
 		// need the node above
+		let buttonText = 'show cats';
+		// initally sets button text to show cats
 		if (this.state.showCats) {
 		// life above creates list of cats if state is true, code to display comments goes inside brackets here
+			buttonText = 'Hide cats';
+			// above updates button text if state changes from button click
 			catNodes = <div className="cat-list"> {cats} </div>
 			// move above div from inside "cat-box" div below
 		}
@@ -226,7 +230,7 @@ class CatBox extends React.Component {
 			<div className="cat-box">
 				<h3>Cats Comments</h3>
 				<h4 className="cat-count">{this._getCatsTitle(cats.length)}</h4>
-				<button onClick = {this._handleClick.bind(this)}>Show Cats</button>
+				<button onClick = {this._handleClick.bind(this)}>{buttonText}</button>
 				{/*button above that will toggle state on click event*/}
 				{catNodes}
 			</div>
